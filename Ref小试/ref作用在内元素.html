@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div class="outinside">
+			<child></child>
+			<p>ref里面的元素</p>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var refoutsidet = {
+			template: `
+				<div class='child' @click="consoleRef">
+					<h5 ref="insideout">this is child component</h5>
+				</div>
+			`,
+			methods: {
+				consoleRef() {
+					console.log(this); // div.child vue实例
+					console.log(this.$refs.insideout); // <h5>我是子组件</h5>
+				}
+			}
+		};
+		var vm = new Vue({
+			el: '.outinside',
+			components: {
+				"child": refoutsidet
+			}
+		})
+	</script>
+</html>

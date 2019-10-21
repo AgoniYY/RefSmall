@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div class="ref">
+			<ul  style="list-style: none;">
+				<!--
+					ref需要在dom渲染后才会有，在使用的时候确保dom已经渲染完成
+					比如在生命周期mounted(){}钩子中调用，或者在this.$nextTick(() => {})中调用。
+					如果ref是循环出来的，有多个重名，那么ref的值会是一个数组，此时要拿到单个的ref值需循环就可以了
+				  -->
+				<!-- 当v-for用于元素或组件的时候，引用信息将是包含dom节点或组件示例的数组 -->
+				<!-- <li v-for="(item, index) in people" ref="refContent" :key="index">
+					{{item.id}}---{{item.name}}
+				</li> -->
+				<li ref="msgLi">{{msg}}</li>
+				<li v-if="msg1">{{msg1}}</li>
+				<li v-if="msg2">{{msg2}}</li>
+				<li v-if="msg3">{{msg3}}</li>
+				<button type="button" @click="ChangeMsg">Change msg</button>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		new Vue({
+			el: '.ref',
+			data: {
+				// people: ['孙悟空','猪悟能','沙悟净','唐玄奘','小白龙'],
+				// people: [
+				// 	{
+				// 		id: 1,
+				// 		name: '孙悟空'
+				// 	},
+				// 	{
+				// 		id: 2,
+				// 		name: '猪悟能'
+				// 	},
+				// 	{
+				// 		id: 3,
+				// 		name: '沙悟净'
+				// 	},
+				// 	{
+				// 		id: 4,
+				// 		name: '唐玄奘'
+				// 	}
+				// ],
+				msg: 'hello vue',
+				msg1: '',
+				msg2: '',
+				msg3: '',
+			},
+			created () {
+				this.$nextTick(() => {
+					console.log(this.$refs.refContent)
+				})
+			},
+			methods: {
+				ChangeMsg () {
+					this.msg = "Hello world"
+					this.msg1 = this.$refs.msgLi.innerHTML
+					this.$nextTick(() => {
+						this.msg2 = this.$refs.msgLi.innerHTML
+					})
+					this.msg3 = this.$refs.msgLi.innerHTML
+					
+				}
+			}
+		})
+	</script>
+</html>
